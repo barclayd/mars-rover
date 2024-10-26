@@ -1,5 +1,5 @@
-import { plateauBoundsInputSchema as plateauBoundsInputSchmema } from "../schemas";
-import type { Plateau } from "../types";
+import { plateauBoundsInputSchema } from "../schemas";
+
 export const chunkArray = <T>(array: T[], chunkSize: number): T[][] => {
 	return array.reduce<T[][]>((acc, _, index) => {
 		if (index % chunkSize === 0) {
@@ -16,41 +16,40 @@ export const removeWhitespace = (str: string): string => {
 export const formatInput = (data: string) => {
 	const lines: string[] = data.split(/\r?\n/);
 	return lines.map((line) => removeWhitespace(line.trim()));
-}
-
-
-
-export const prettyPrintPlateau = (plateau: Plateau) => {
-	const maxLength = Math.max(
-		...plateau.grid.flat().map((item) => item.toString().length),
-	);
-
-	plateau.grid.forEach((row, arrayY) => {
-		const y = plateau.grid.length - 1 - arrayY;
-		console.log(
-			row
-				.map((cell, x) =>
-					cell === "" ? `(${x},${y})` : cell.toString().padEnd(maxLength, " "),
-				)
-				.join(" | "),
-		);
-	});
 };
 
-export const getPlateauBounds = (plateauBoundsInput: string): { upperX: number, upperY: number } => {
-	if (!plateauBoundsInput) {
-		throw new Error("Missing plateau coordinates");
+export const getInstructionsFromFile = async (filePath: string) => {
+	let input: string;
+	try {
+		const file = Bun.file(filePath);
+		input = await file.text();
+	} catch (error: unknown) {
+		throw new Error(
+			`Error reading input file: ${error instanceof Error ? error.message : String(error)}`,
+		);
 	}
 
-	const plateauBoundsInputData = plateauBoundsInputSchmema.safeParse(
-		plateauBoundsInput.split(""),
-	)?.data;
+	const lines: string[] = input.split(/\r?\n/);
+	const formattedLines = lines.map((line) => removeWhitespace(line.trim()));
 
-	if (!plateauBoundsInputData) {
+	const [upperRightCoordinatesOfPlateau, ...instructionsInput] = formattedLines;
+
+	const [upperXInput, upperYInput] = upperRightCoordinatesOfPlateau.split("");
+
+	const parsedUpperRightCoordinates = plateauBoundsInputSchema.safeParse([
+		upperXInput,
+		upperYInput,
+	]).data;
+
+	if (!parsedUpperRightCoordinates) {
 		throw new Error("Invalid upper right coordinates of plateau");
 	}
 
-	const [upperX, upperY] = plateauBoundsInputData;
+	const [upperX, upperY] = parsedUpperRightCoordinates;
 
-	return { upperX, upperY };
-}
+	return {
+		upperX,
+		upperY,
+		instructions: chunkArray(instructionsInput, 2),
+	};
+};

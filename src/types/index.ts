@@ -10,4 +10,3 @@ export type Instruction = (typeof Instruction)[number];
 
 export const Direction = ["N", "E", "S", "W"] as const;
 export type Direction = (typeof Direction)[number];
-
