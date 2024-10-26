@@ -1,18 +1,27 @@
 import type { Plateau } from "../types";
 
 export const prettyPrintPlateau = (plateau: Plateau) => {
-	const maxLength = Math.max(
-		...plateau.grid.flat().map((item) => item.toString().length),
-	);
+	const cellLength = 5;
 
 	plateau.grid.forEach((row, arrayY) => {
 		const y = plateau.grid.length - 1 - arrayY;
 		console.log(
 			row
 				.map((cell, x) =>
-					cell === "" ? `(${x},${y})` : cell.toString().padEnd(maxLength, " "),
+					cell === "" ? `(${x},${y})` : printActiveCell(cell, cellLength),
 				)
 				.join(" | "),
 		);
 	});
 };
+
+
+function printActiveCell(str: string, length: number): string {
+	const totalPadding = length - str.length;
+
+	const paddingChar = " ";
+	
+	const paddingStart = Math.floor(totalPadding / 2);
+  
+	return str.padStart(str.length + paddingStart, paddingChar).padEnd(length, paddingChar);
+  }

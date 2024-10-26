@@ -62,7 +62,7 @@ export const moveRover = (
 	plateau: Plateau,
 	instructions: string,
 	placedRoverCoordinates: { x: number; y: number },
-	currentDirection: Direction,
+	direction: Direction,
 ) => {
 	const parsedInstructions = instructionsSchema.safeParse(
 		instructions.split(""),
@@ -73,17 +73,35 @@ export const moveRover = (
 	}
 
 	let currentCoordinates = placedRoverCoordinates;
+	let currentDirection = direction;
 
 	parsedInstructions.data.forEach((instruction) => {
-		if (instruction === "L" || instruction === "R") {
-			currentDirection = rotateRover(currentDirection, instruction);
-			plateau.set(currentCoordinates.x, currentCoordinates.y, currentDirection);
-		} else if (instruction === "M") {
-			currentCoordinates = updateRoverCoordinates(
-				plateau,
-				currentDirection,
-				currentCoordinates,
-			);
-		}
+		const instructionMap: Record<Instruction, () => void> = {
+			L: () => {
+				currentDirection = rotateRover(currentDirection, "L");
+				plateau.set(
+					currentCoordinates.x,
+					currentCoordinates.y,
+					currentDirection,
+				);
+			},
+			R: () => {
+				currentDirection = rotateRover(currentDirection, "R");
+				plateau.set(
+					currentCoordinates.x,
+					currentCoordinates.y,
+					currentDirection,
+				);
+			},
+			M: () => {
+				currentCoordinates = updateRoverCoordinates(
+					plateau,
+					currentDirection,
+					currentCoordinates,
+				);
+			},
+		};
+
+		instructionMap[instruction]();
 	});
 };
