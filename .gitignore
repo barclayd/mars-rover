@@ -24,3 +24,5 @@ coverage/
 # Build output
 dist/
 
+# Output
+output.txt

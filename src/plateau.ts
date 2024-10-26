@@ -1,3 +1,4 @@
+import type { factory } from 'typescript';
 import { plateauBoundsInputSchema } from './schemas';
 import type { Direction, Plateau } from './types';
 

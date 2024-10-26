@@ -1,4 +1,6 @@
 import { plateauBoundsInputSchema } from '../schemas';
+import type { Direction } from '../types';
+import { readFile } from './bun';
 
 export const chunkArray = <T>(array: T[], chunkSize: number): T[][] => {
 	return array.reduce<T[][]>((acc, _, index) => {
@@ -18,17 +20,12 @@ export const formatInput = (data: string) => {
 	return lines.map((line) => removeWhitespace(line.trim()));
 };
 
-export const getInstructionsFromFile = async (filePath: string) => {
-	let input: string;
-
-	try {
-		const file = Bun.file(filePath);
-		input = await file.text();
-	} catch (error: unknown) {
-		throw new Error(
-			`Error reading input file: ${error instanceof Error ? error.message : String(error)}`,
-		);
+export const getInstructionsFromFile = async (filePath?: string) => {
+	if (!filePath) {
+		throw new Error('File path is required');
 	}
+
+	const input = await readFile(filePath);
 
 	const lines: string[] = input.split(/\r?\n/);
 	const formattedLines = lines.map((line) => removeWhitespace(line.trim()));
@@ -53,4 +50,12 @@ export const getInstructionsFromFile = async (filePath: string) => {
 		upperY,
 		instructions: chunkArray(instructionsInput, 2),
 	};
+};
+
+export const formatRoverPositions = (
+	roverPositions: { x: number; y: number; direction: Direction }[],
+) => {
+	return roverPositions
+		.map((rover) => `${rover.x} ${rover.y} ${rover.direction}`)
+		.join('\n\n');
 };
