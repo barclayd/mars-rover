@@ -50,15 +50,15 @@ export const writeOutputToFile = async (output: string) => {
 };
 
 export const removeFile = async () => {
-  const path = Bun.env.OUTPUT_FILE_PATH;
+	const path = Bun.env.OUTPUT_FILE_PATH;
 
 	if (!path) {
 		throw new Error('File path is required');
 	}
 
-  const file = Bun.file(path);
+	const file = Bun.file(path);
 
-  const fileExists = await file.exists();
+	const fileExists = await file.exists();
 
 	if (!fileExists) {
 		return;
