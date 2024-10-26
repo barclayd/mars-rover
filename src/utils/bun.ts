@@ -1,3 +1,4 @@
+import { unlink } from 'node:fs/promises';
 import { parseArgs } from 'node:util';
 
 export const getCommandLineArgs = () => {
@@ -21,4 +22,47 @@ export const getCommandLineArgs = () => {
 		filePath,
 		isDev,
 	};
+};
+
+export const readFile = async (filePath: string) => {
+	let input: string;
+
+	try {
+		const file = Bun.file(filePath);
+		input = await file.text();
+	} catch (error: unknown) {
+		throw new Error(
+			`Error reading input file: ${error instanceof Error ? error.message : String(error)}`,
+		);
+	}
+
+	return input;
+};
+
+export const writeOutputToFile = async (output: string) => {
+	const path = Bun.env.OUTPUT_FILE_PATH;
+
+	if (!path) {
+		throw new Error('Output file path is required');
+	}
+
+	await Bun.write(path, output);
+};
+
+export const removeFile = async () => {
+	const path = Bun.env.OUTPUT_FILE_PATH;
+
+	if (!path) {
+		throw new Error('File path is required');
+	}
+
+	const file = Bun.file(path);
+
+	const fileExists = await file.exists();
+
+	if (!fileExists) {
+		return;
+	}
+
+	await unlink(path);
 };

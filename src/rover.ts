@@ -104,4 +104,10 @@ export const moveRover = (
 
 		instructionMap[instruction]();
 	});
+
+	return {
+		x: currentCoordinates.x,
+		y: currentCoordinates.y,
+		direction: currentDirection,
+	};
 };
