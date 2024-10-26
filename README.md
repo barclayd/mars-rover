@@ -7,7 +7,14 @@ This project simulates the control of Mars Rovers based on NASA specifications. 
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Usage](#usage)
+  - [Production Mode](#production-mode)
+  - [Development Mode](#development-mode)
+- [Configuration](#configuration)
+  - [Command Line Arguments](#command-line-arguments)
+  - [Environment Variables](#environment-variables)
+- [Testing](#testing)
 - [Project Structure](#project-structure)
+- [Contributing](#contributing)
 - [License](#license)
 
 ## Prerequisites
@@ -29,10 +36,22 @@ This project simulates the control of Mars Rovers based on NASA specifications. 
 
 ## Usage
 
-To run the Mars Rover simulation:
+To run the Mars Rover simulation in production mode:
 
 ```sh
 bun start
+```
+
+This will output the final positions of the rovers to the file specified in the `OUTPUT_FILE_PATH` environment variable, upon success.
+
+The `OUTPUT_FILE_PATH` is deleted if it exists before the application starts to ensure an accurate output.
+
+### Development Mode
+
+To run the Mars Rover simulation in development mode:
+
+```sh
+bun dev
 ```
 
 This will output a representation of the plateau to the console:
@@ -47,6 +66,23 @@ This will output a representation of the plateau to the console:
 | (0,0) | (1,0) | (2,0) | (3,0) | (4,0) | (5,0) |
 
 This can be used to visualize the plateau and the rovers' positions and for debugging purposes.
+
+## Configuration
+
+### Command line arguments
+
+The application accepts the following command line arguments:
+
+- `filePath`: The path to the input file
+- `isDev`: A boolean flag to indicate if the application is running in development mode
+
+
+### Environment variables
+
+The application uses the following environment variables:
+
+- `OUTPUT_FILE_PATH`: The path to the output file
+- `DEFAULT_INPUT_FILE_PATH`: The path to the default input file
 
 ## Linting
 
