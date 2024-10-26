@@ -3,7 +3,7 @@ import { createPlateau } from './plateau';
 import { moveRover, placeRover } from './rover';
 import { getInstructionsFromFile } from './utils';
 
-const exploreTerrain = async (filePath: string) => {
+const exploreMars = async (filePath: string) => {
 	const { upperX, upperY, instructions } =
 		await getInstructionsFromFile(filePath);
 	const plateau = createPlateau(upperX, upperY);
@@ -19,4 +19,4 @@ const exploreTerrain = async (filePath: string) => {
 	prettyPrintPlateau(plateau);
 };
 
-exploreTerrain('./test/manual/data.txt');
+exploreMars('./test/manual/data.txt');
