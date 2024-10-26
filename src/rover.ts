@@ -1,14 +1,14 @@
-import { initialCoordinatesSchema, instructionsSchema } from "./schemas";
-import type { Direction, Instruction, Plateau } from "./types";
+import { initialCoordinatesSchema, instructionsSchema } from './schemas';
+import type { Direction, Instruction, Plateau } from './types';
 
 export const placeRover = (plateau: Plateau, initialCoordinates: string) => {
 	const parsedInitialCoordinates = initialCoordinatesSchema.safeParse(
-		initialCoordinates.split(""),
+		initialCoordinates.split(''),
 	);
 
 	if (!parsedInitialCoordinates.success) {
 		console.log(parsedInitialCoordinates.error);
-		throw new Error("Invalid initial coordinates");
+		throw new Error('Invalid initial coordinates');
 	}
 
 	const [x, y, direction] = parsedInitialCoordinates.data;
@@ -23,10 +23,10 @@ const rotateRover = (
 	instruction: Instruction,
 ): Direction => {
 	const directionMap: Record<Direction, Record<Instruction, Direction>> = {
-		N: { L: "W", R: "E", M: "N" },
-		E: { L: "N", R: "S", M: "E" },
-		S: { L: "E", R: "W", M: "S" },
-		W: { L: "S", R: "N", M: "W" },
+		N: { L: 'W', R: 'E', M: 'N' },
+		E: { L: 'N', R: 'S', M: 'E' },
+		S: { L: 'E', R: 'W', M: 'S' },
+		W: { L: 'S', R: 'N', M: 'W' },
 	};
 	return directionMap[currentDirection][instruction];
 };
@@ -49,12 +49,12 @@ const updateRoverCoordinates = (
 	const newY = currentCoordinates.y + dy;
 
 	if (!plateau.isValidPosition(newX, newY)) {
-		console.log("Invalid move. Rover stays in place.");
+		console.log('Invalid move. Rover stays in place.');
 		return currentCoordinates;
 	}
 
 	plateau.set(newX, newY, currentDirection);
-	plateau.set(currentCoordinates.x, currentCoordinates.y, "");
+	plateau.set(currentCoordinates.x, currentCoordinates.y, '');
 	return { x: newX, y: newY };
 };
 
@@ -65,11 +65,11 @@ export const moveRover = (
 	direction: Direction,
 ) => {
 	const parsedInstructions = instructionsSchema.safeParse(
-		instructions.split(""),
+		instructions.split(''),
 	);
 
 	if (!parsedInstructions.success) {
-		throw new Error("Invalid instructions");
+		throw new Error('Invalid instructions');
 	}
 
 	let currentCoordinates = placedRoverCoordinates;
@@ -78,7 +78,7 @@ export const moveRover = (
 	parsedInstructions.data.forEach((instruction) => {
 		const instructionMap: Record<Instruction, () => void> = {
 			L: () => {
-				currentDirection = rotateRover(currentDirection, "L");
+				currentDirection = rotateRover(currentDirection, 'L');
 				plateau.set(
 					currentCoordinates.x,
 					currentCoordinates.y,
@@ -86,7 +86,7 @@ export const moveRover = (
 				);
 			},
 			R: () => {
-				currentDirection = rotateRover(currentDirection, "R");
+				currentDirection = rotateRover(currentDirection, 'R');
 				plateau.set(
 					currentCoordinates.x,
 					currentCoordinates.y,

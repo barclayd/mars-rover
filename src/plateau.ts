@@ -1,17 +1,17 @@
-import { plateauBoundsInputSchema } from "./schemas";
-import type { Direction, Plateau } from "./types";
+import { plateauBoundsInputSchema } from './schemas';
+import type { Direction, Plateau } from './types';
 
 export const createPlateau = (rows: number, columns: number): Plateau => {
 	const grid = Array(rows + 1)
 		.fill(null)
-		.map(() => Array(columns + 1).fill(""))
+		.map(() => Array(columns + 1).fill(''))
 		.reverse();
 
 	const arrayY = (y: number) => grid.length - 1 - y;
 
 	return {
 		grid,
-		set: (x: number, y: number, value: Direction | "") => {
+		set: (x: number, y: number, value: Direction | '') => {
 			grid[arrayY(y)][x] = value;
 		},
 		get: (x: number, y: number) => {
@@ -27,15 +27,15 @@ export const getPlateauBounds = (
 	plateauBoundsInput: string,
 ): { upperX: number; upperY: number } => {
 	if (!plateauBoundsInput) {
-		throw new Error("Missing plateau coordinates");
+		throw new Error('Missing plateau coordinates');
 	}
 
 	const plateauBoundsInputData = plateauBoundsInputSchema.safeParse(
-		plateauBoundsInput.split(""),
+		plateauBoundsInput.split(''),
 	)?.data;
 
 	if (!plateauBoundsInputData) {
-		throw new Error("Invalid upper right coordinates of plateau");
+		throw new Error('Invalid upper right coordinates of plateau');
 	}
 
 	const [upperX, upperY] = plateauBoundsInputData;

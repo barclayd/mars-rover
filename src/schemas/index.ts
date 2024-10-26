@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { Direction, Instruction } from "../types";
+import { z } from 'zod';
+import { Direction, Instruction } from '../types';
 
 export const initialCoordinatesSchema = z.tuple([
 	z.string().transform((val) => Number.parseInt(val, 10)),

@@ -1,4 +1,4 @@
-import { plateauBoundsInputSchema } from "../schemas";
+import { plateauBoundsInputSchema } from '../schemas';
 
 export const chunkArray = <T>(array: T[], chunkSize: number): T[][] => {
 	return array.reduce<T[][]>((acc, _, index) => {
@@ -10,7 +10,7 @@ export const chunkArray = <T>(array: T[], chunkSize: number): T[][] => {
 };
 
 export const removeWhitespace = (str: string): string => {
-	return str.replace(/\s/g, "");
+	return str.replace(/\s/g, '');
 };
 
 export const formatInput = (data: string) => {
@@ -34,7 +34,7 @@ export const getInstructionsFromFile = async (filePath: string) => {
 
 	const [upperRightCoordinatesOfPlateau, ...instructionsInput] = formattedLines;
 
-	const [upperXInput, upperYInput] = upperRightCoordinatesOfPlateau.split("");
+	const [upperXInput, upperYInput] = upperRightCoordinatesOfPlateau.split('');
 
 	const parsedUpperRightCoordinates = plateauBoundsInputSchema.safeParse([
 		upperXInput,
@@ -42,7 +42,7 @@ export const getInstructionsFromFile = async (filePath: string) => {
 	]).data;
 
 	if (!parsedUpperRightCoordinates) {
-		throw new Error("Invalid upper right coordinates of plateau");
+		throw new Error('Invalid upper right coordinates of plateau');
 	}
 
 	const [upperX, upperY] = parsedUpperRightCoordinates;

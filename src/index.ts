@@ -1,7 +1,7 @@
-import { prettyPrintPlateau } from "./helpers";
-import { createPlateau } from "./plateau";
-import { moveRover, placeRover } from "./rover";
-import { getInstructionsFromFile } from "./utils";
+import { prettyPrintPlateau } from './helpers';
+import { createPlateau } from './plateau';
+import { moveRover, placeRover } from './rover';
+import { getInstructionsFromFile } from './utils';
 
 const exploreTerrain = async (filePath: string) => {
 	const { upperX, upperY, instructions } =
@@ -19,4 +19,4 @@ const exploreTerrain = async (filePath: string) => {
 	prettyPrintPlateau(plateau);
 };
 
-exploreTerrain("./test/manual/data.txt");
+exploreTerrain('./test/manual/data.txt');
