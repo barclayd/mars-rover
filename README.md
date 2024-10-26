@@ -19,7 +19,7 @@ This project simulates the control of Mars Rovers based on NASA specifications. 
 
 ## Prerequisites
 
-- [Bun](https://bun.sh/) - A fast all-in-one JavaScript runtime (requires Node.js v18.17.1 or higher)
+- [Bun](https://bun.sh/) - A fast all-in-one JavaScript runtime (setup instructions [here](https://bun.sh/docs/installation))
 
 ## Installation
 
