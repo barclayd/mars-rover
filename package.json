@@ -4,10 +4,12 @@
 	"type": "module",
 	"scripts": {
 		"start": "bun run src/index.ts",
+		"dev": "bun run src/index.ts --dev",
 		"lint": "bunx biome check --write ."
 	},
 	"devDependencies": {
-		"@types/bun": "latest"
+		"@types/bun": "latest",
+		"@biomejs/biome": "latest"
 	},
 	"peerDependencies": {
 		"typescript": "^5.0.0"

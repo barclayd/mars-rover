@@ -1,22 +1,37 @@
 import { prettyPrintPlateau } from './helpers';
 import { createPlateau } from './plateau';
 import { moveRover, placeRover } from './rover';
+import type { Plateau } from './types';
 import { getInstructionsFromFile } from './utils';
+import { getCommandLineArgs } from './utils/bun';
 
-const exploreMars = async (filePath: string) => {
-	const { upperX, upperY, instructions } =
-		await getInstructionsFromFile(filePath);
-	const plateau = createPlateau(upperX, upperY);
+export const exploreMars = async (filePath: string) => {
+	let plateau: Plateau;
 
-	instructions.forEach(([initialCoordinatesWithDirection, instructions]) => {
-		const { x, y, direction } = placeRover(
-			plateau,
-			initialCoordinatesWithDirection,
-		);
-		moveRover(plateau, instructions, { x, y }, direction);
-	});
+	try {
+		const { upperX, upperY, instructions } =
+			await getInstructionsFromFile(filePath);
+		plateau = createPlateau(upperX, upperY);
 
-	prettyPrintPlateau(plateau);
+		instructions.forEach(([initialCoordinatesWithDirection, instructions]) => {
+			const { x, y, direction } = placeRover(
+				plateau,
+				initialCoordinatesWithDirection,
+			);
+			moveRover(plateau, instructions, { x, y }, direction);
+		});
+	} catch (error) {
+		console.error('An error occurred while exploring Mars:', error);
+		throw error;
+	}
+
+	const { isDev } = getCommandLineArgs();
+
+	if (isDev) {
+		prettyPrintPlateau(plateau);
+	}
 };
 
-exploreMars('./test/manual/data.txt');
+const { filePath } = getCommandLineArgs();
+
+exploreMars(filePath ?? './test/manual/data.txt');

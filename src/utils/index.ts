@@ -20,6 +20,7 @@ export const formatInput = (data: string) => {
 
 export const getInstructionsFromFile = async (filePath: string) => {
 	let input: string;
+
 	try {
 		const file = Bun.file(filePath);
 		input = await file.text();
