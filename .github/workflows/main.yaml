@@ -9,8 +9,8 @@ on:
       - main
 
 jobs:
-  my-job:
-    name: my-job
+  ci:
+    name: ci
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
