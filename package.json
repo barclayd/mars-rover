@@ -6,6 +6,7 @@
     "start": "bun run src/index.ts",
     "dev": "bun run src/index.ts --dev",
     "lint": "bunx biome check --write .",
+    "test": "bun test",
     "types": "tsc --noEmit"
   },
   "devDependencies": {
