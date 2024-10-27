@@ -1,68 +1,49 @@
-import { unlink } from 'node:fs/promises';
 import { parseArgs } from 'node:util';
 
 export const getCommandLineArgs = () => {
-	const args = parseArgs({
-		options: {
-			file: {
-				type: 'string',
-				short: 'f',
-			},
-			dev: {
-				type: 'boolean',
-				short: 'd',
-			},
-		},
-	});
+  const args = parseArgs({
+    options: {
+      file: {
+        type: 'string',
+        short: 'f',
+      },
+      dev: {
+        type: 'boolean',
+        short: 'd',
+      },
+    },
+  });
 
-	const filePath = args.values.file;
-	const isDev = args.values.dev;
+  const filePath = args.values.file;
+  const isDev = args.values.dev;
 
-	return {
-		filePath,
-		isDev,
-	};
+  return {
+    filePath,
+    isDev,
+  };
 };
 
 export const readFile = async (filePath: string) => {
-	let input: string;
+  let input: string;
 
-	try {
-		const file = Bun.file(filePath);
-		input = await file.text();
-	} catch (error: unknown) {
-		throw new Error(
-			`Error reading input file: ${error instanceof Error ? error.message : String(error)}`,
-		);
-	}
+  try {
+    const file = Bun.file(filePath);
+    input = await file.text();
+  } catch (error: unknown) {
+    throw new Error(
+      `Error reading input file: ${error instanceof Error ? error.message : String(error)}`,
+    );
+  }
 
-	return input;
+  return input;
 };
 
 export const writeOutputToFile = async (output: string) => {
-	const path = Bun.env.OUTPUT_FILE_PATH;
+  const path = Bun.env.OUTPUT_FILE_PATH;
 
-	if (!path) {
-		throw new Error('Output file path is required');
-	}
+  if (!path) {
+    throw new Error('Output file path is required');
+  }
 
-	await Bun.write(path, output);
-};
-
-export const removeFile = async () => {
-	const path = Bun.env.OUTPUT_FILE_PATH;
-
-	if (!path) {
-		throw new Error('File path is required');
-	}
-
-	const file = Bun.file(path);
-
-	const fileExists = await file.exists();
-
-	if (!fileExists) {
-		return;
-	}
-
-	await unlink(path);
+  await Bun.write(path, output);
 };

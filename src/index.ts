@@ -1,6 +1,6 @@
-import { exploreMars } from './mars';
+import { simulateMission } from './mars';
 import { getCommandLineArgs } from './utils/bun';
 
 const { filePath, isDev } = getCommandLineArgs();
 
-exploreMars(filePath ?? Bun.env.DEFAULT_INPUT_FILE_PATH, isDev);
+simulateMission(filePath ?? Bun.env.DEFAULT_INPUT_FILE_PATH, isDev);

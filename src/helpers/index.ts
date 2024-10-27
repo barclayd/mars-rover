@@ -1,28 +1,28 @@
 import type { Plateau } from '../types';
 
 export const prettyPrintPlateau = (plateau: Plateau) => {
-	const cellLength = 5;
+  const cellLength = 5;
 
-	plateau.grid.forEach((row, arrayY) => {
-		const y = plateau.grid.length - 1 - arrayY;
-		console.log(
-			row
-				.map((cell, x) =>
-					cell === '' ? `(${x},${y})` : printActiveCell(cell, cellLength),
-				)
-				.join(' | '),
-		);
-	});
+  plateau.terrain.forEach((row, arrayY) => {
+    const y = plateau.terrain.length - 1 - arrayY;
+    console.debug(
+      row
+        .map((cell, x) =>
+          cell === '' ? `(${x},${y})` : printActiveCell(cell, cellLength),
+        )
+        .join(' | '),
+    );
+  });
 };
 
 function printActiveCell(str: string, length: number): string {
-	const totalPadding = length - str.length;
+  const totalPadding = length - str.length;
 
-	const paddingChar = ' ';
+  const paddingChar = ' ';
 
-	const paddingStart = Math.floor(totalPadding / 2);
+  const paddingStart = Math.floor(totalPadding / 2);
 
-	return str
-		.padStart(str.length + paddingStart, paddingChar)
-		.padEnd(length, paddingChar);
+  return str
+    .padStart(str.length + paddingStart, paddingChar)
+    .padEnd(length, paddingChar);
 }

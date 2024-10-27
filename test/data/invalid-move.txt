@@ -1,0 +1,9 @@
+5 5
+
+5 5 N
+
+MMMMMMMLMM
+
+3 3 E
+
+MMRMMRMRRM
