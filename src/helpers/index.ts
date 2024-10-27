@@ -3,8 +3,8 @@ import type { Plateau } from '../types';
 export const prettyPrintPlateau = (plateau: Plateau) => {
   const cellLength = 5;
 
-  plateau.grid.forEach((row, arrayY) => {
-    const y = plateau.grid.length - 1 - arrayY;
+  plateau.terrain.forEach((row, arrayY) => {
+    const y = plateau.terrain.length - 1 - arrayY;
     console.log(
       row
         .map((cell, x) =>

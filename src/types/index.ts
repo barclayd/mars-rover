@@ -1,8 +1,9 @@
 export type Plateau = {
-  grid: (Direction | '')[][];
-  set: (x: number, y: number, value: Direction | '') => void;
-  get: (x: number, y: number) => Direction | '';
-  isValidPosition: (x: number, y: number) => boolean;
+  terrain: (Direction | '')[][];
+  roverPositions: { x: number; y: number; direction: Direction }[];
+  setRoverPosition: (x: number, y: number, value: Direction | '') => void;
+  getRoverPosition: (x: number, y: number) => Direction | '';
+  isValidRoverPosition: (x: number, y: number) => boolean;
 };
 
 export const Instruction = ['M', 'L', 'R'] as const;

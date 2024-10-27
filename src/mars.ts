@@ -1,13 +1,12 @@
 import { prettyPrintPlateau } from './helpers';
 import { createPlateau } from './plateau';
 import { moveRover, placeRover } from './rover';
-import type { Direction, Plateau } from './types';
+import type { Plateau } from './types';
 import { formatRoverPositions, getInstructionsFromFile } from './utils';
 import { writeOutputToFile } from './utils/bun';
 
-export const exploreMars = async (filePath?: string, isDev?: boolean) => {
+export const simulateMission = async (filePath?: string, isDev?: boolean) => {
   let plateau: Plateau;
-  const roverPositions: { x: number; y: number; direction: Direction }[] = [];
 
   try {
     const { upperX, upperY, instructions } =
@@ -15,21 +14,21 @@ export const exploreMars = async (filePath?: string, isDev?: boolean) => {
     plateau = createPlateau(upperX, upperY);
 
     instructions.forEach(([initialCoordinatesWithDirection, instructions]) => {
-      const initialPosition = placeRover(
+      const initialRoverPosition = placeRover(
         plateau,
         initialCoordinatesWithDirection,
       );
-      const finalPosition = moveRover(
+      const finalRoverPosition = moveRover(
         plateau,
         instructions,
-        { x: initialPosition.x, y: initialPosition.y },
-        initialPosition.direction,
+        { x: initialRoverPosition.x, y: initialRoverPosition.y },
+        initialRoverPosition.direction,
       );
 
-      roverPositions.push(finalPosition);
+      plateau.roverPositions.push(finalRoverPosition);
     });
   } catch (error) {
-    console.error('An error occurred while exploring Mars:', error);
+    console.error('An error occurred while exploring Mars');
     throw error;
   }
 
@@ -38,7 +37,7 @@ export const exploreMars = async (filePath?: string, isDev?: boolean) => {
     return;
   }
 
-  const formattedRoverPositions = formatRoverPositions(roverPositions);
+  const formattedRoverPositions = formatRoverPositions(plateau.roverPositions);
 
   await writeOutputToFile(formattedRoverPositions);
 };

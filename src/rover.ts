@@ -14,7 +14,7 @@ export const placeRover = (plateau: Plateau, initialCoordinates: string) => {
 
   const [x, y, direction] = parsedInitialCoordinates.data;
 
-  plateau.set(x, y, direction);
+  plateau.setRoverPosition(x, y, direction);
 
   return { x, y, direction };
 };
@@ -49,13 +49,13 @@ const updateRoverCoordinates = (
   const newX = currentCoordinates.x + dx;
   const newY = currentCoordinates.y + dy;
 
-  if (!plateau.isValidPosition(newX, newY)) {
+  if (!plateau.isValidRoverPosition(newX, newY)) {
     console.warn('Invalid move. Rover stays in place.');
     return currentCoordinates;
   }
 
-  plateau.set(newX, newY, currentDirection);
-  plateau.set(currentCoordinates.x, currentCoordinates.y, '');
+  plateau.setRoverPosition(newX, newY, currentDirection);
+  plateau.setRoverPosition(currentCoordinates.x, currentCoordinates.y, '');
   return { x: newX, y: newY };
 };
 
@@ -82,7 +82,7 @@ export const moveRover = (
     const instructionMap: Record<Instruction, () => void> = {
       L: () => {
         currentDirection = rotateRover(currentDirection, 'L');
-        plateau.set(
+        plateau.setRoverPosition(
           currentCoordinates.x,
           currentCoordinates.y,
           currentDirection,
@@ -90,7 +90,7 @@ export const moveRover = (
       },
       R: () => {
         currentDirection = rotateRover(currentDirection, 'R');
-        plateau.set(
+        plateau.setRoverPosition(
           currentCoordinates.x,
           currentCoordinates.y,
           currentDirection,
