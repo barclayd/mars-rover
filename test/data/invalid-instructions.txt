@@ -1,8 +1,8 @@
-5 A
+5 5
 
 1 2 N
 
-LMLMLMLMM
+LXLMLMLMM
 
 3 3 E
 

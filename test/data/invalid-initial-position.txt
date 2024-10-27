@@ -1,5 +1,9 @@
 5 5
+
 1 P N
+
 LMLMLMLMM
+
 3 3 E
+
 MMRMMRMRRM

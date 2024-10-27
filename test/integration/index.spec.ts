@@ -35,7 +35,15 @@ test('should throw an error if the input file is empty', async () => {
 	);
 });
 
-test('should throw an error if the upper right coordinates of the plateau are invalid', async () => {
+test('should throw an error if the upper bounds of the plateau are missing', async () => {
+	const inputFile = './test/data/missing-upper-bounds.txt';
+
+	await expect(exploreMars(inputFile)).rejects.toThrowError(
+		'Missing upper bounds of plateau',
+	);
+});
+
+test('should throw an error if the upper bounds of the plateau are invalid', async () => {
 	const inputFile = './test/data/invalid-upper-bounds.txt';
 
 	await expect(exploreMars(inputFile)).rejects.toThrowError(
@@ -47,7 +55,7 @@ test('should throw an error if the initial position of a rover is invalid', asyn
 	const inputFile = './test/data/invalid-initial-position.txt';
 
 	await expect(exploreMars(inputFile)).rejects.toThrowError(
-		'Invalid initial position of rover',
+		'Invalid initial coordinates: Expected number, received nan',
 	);
 });
 
@@ -55,6 +63,26 @@ test('should throw an error if the initial direction of a rover is invalid', asy
 	const inputFile = './test/data/invalid-initial-direction.txt';
 
 	await expect(exploreMars(inputFile)).rejects.toThrowError(
-		'Invalid initial direction of rover',
+		`Invalid initial coordinates: Invalid enum value. Expected 'N' | 'E' | 'S' | 'W', received 'X'`,
 	);
+});
+
+test('should throw an error if the instructions of a rover are invalid', async () => {
+	const inputFile = './test/data/invalid-instructions.txt';
+
+	await expect(exploreMars(inputFile)).rejects.toThrowError(
+		`Invalid instructions: Invalid enum value. Expected 'M' | 'L' | 'R', received 'X'`,
+	);
+});
+
+test('should call console.warn if the rover moves out of bounds', async () => {
+	const inputFile = './test/data/invalid-move.txt';
+
+    const warnSpy = mock(() => {});
+
+    console.warn = warnSpy;
+
+    await exploreMars(inputFile);
+
+    expect(warnSpy).toHaveBeenCalledWith('Invalid move. Rover stays in place.');
 });

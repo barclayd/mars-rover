@@ -31,23 +31,31 @@ export const getInstructionsFromFile = async (filePath?: string) => {
 		throw new Error('Error reading input file: Input file is empty');
 	}
 
-	const lines: string[] = input.split(/\r?\n/);
+	const lines: string[] = input.split(/\r?\n/).filter((line) => line.trim() !== '');
+
 	const formattedLines = lines.map((line) => removeWhitespace(line.trim()));
 
-	const [upperRightCoordinatesOfPlateau, ...instructionsInput] = formattedLines;
+	const [upperBoundsInput, ...instructionsInput] = formattedLines;
 
-	const [upperXInput, upperYInput] = upperRightCoordinatesOfPlateau.split('');
+	const formattedUpperBounds = upperBoundsInput.split('');
+
+	if (formattedUpperBounds.length !== 2) {
+		throw new Error('Missing upper bounds of plateau');
+	}
+
+	const [upperXInput, upperYInput] = formattedUpperBounds;
 
 	const upperBounds = plateauBoundsInputSchema.safeParse([
 		upperXInput,
 		upperYInput,
-	]).data;
+	]);
 
-	if (!upperBounds) {
+
+	if (!upperBounds.success) {
 		throw new Error('Invalid upper bounds of plateau');
 	}
 
-	const [upperX, upperY] = upperBounds;
+	const [upperX, upperY] = upperBounds.data;
 
 	return {
 		upperX,

@@ -7,8 +7,7 @@ export const placeRover = (plateau: Plateau, initialCoordinates: string) => {
 	);
 
 	if (!parsedInitialCoordinates.success) {
-		console.log(parsedInitialCoordinates.error);
-		throw new Error('Invalid initial coordinates');
+		throw new Error(`Invalid initial coordinates: ${parsedInitialCoordinates.error.errors.map((error) => error.message).join(', ')}`);
 	}
 
 	const [x, y, direction] = parsedInitialCoordinates.data;
@@ -49,7 +48,7 @@ const updateRoverCoordinates = (
 	const newY = currentCoordinates.y + dy;
 
 	if (!plateau.isValidPosition(newX, newY)) {
-		console.log('Invalid move. Rover stays in place.');
+		console.warn('Invalid move. Rover stays in place.');
 		return currentCoordinates;
 	}
 
@@ -69,7 +68,7 @@ export const moveRover = (
 	);
 
 	if (!parsedInstructions.success) {
-		throw new Error('Invalid instructions');
+		throw new Error(`Invalid instructions: ${parsedInstructions.error.errors.map((error) => error.message).join(', ')}`);
 	}
 
 	let currentCoordinates = placedRoverCoordinates;
