@@ -27,6 +27,10 @@ export const getInstructionsFromFile = async (filePath?: string) => {
 
 	const input = await readFile(filePath);
 
+	if (!input) {
+		throw new Error('Error reading input file: Input file is empty');
+	}
+
 	const lines: string[] = input.split(/\r?\n/);
 	const formattedLines = lines.map((line) => removeWhitespace(line.trim()));
 
@@ -34,16 +38,16 @@ export const getInstructionsFromFile = async (filePath?: string) => {
 
 	const [upperXInput, upperYInput] = upperRightCoordinatesOfPlateau.split('');
 
-	const parsedUpperRightCoordinates = plateauBoundsInputSchema.safeParse([
+	const upperBounds = plateauBoundsInputSchema.safeParse([
 		upperXInput,
 		upperYInput,
 	]).data;
 
-	if (!parsedUpperRightCoordinates) {
-		throw new Error('Invalid upper right coordinates of plateau');
+	if (!upperBounds) {
+		throw new Error('Invalid upper bounds of plateau');
 	}
 
-	const [upperX, upperY] = parsedUpperRightCoordinates;
+	const [upperX, upperY] = upperBounds;
 
 	return {
 		upperX,

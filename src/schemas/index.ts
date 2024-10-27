@@ -10,6 +10,6 @@ export const initialCoordinatesSchema = z.tuple([
 export const instructionsSchema = z.array(z.enum(Instruction));
 
 export const plateauBoundsInputSchema = z.tuple([
-	z.string().transform((val) => Number.parseInt(val, 10)),
-	z.string().transform((val) => Number.parseInt(val, 10)),
+	z.number({ coerce: true }),
+	z.number({ coerce: true }),
 ]);

@@ -1,4 +1,3 @@
-import { unlink } from 'node:fs/promises';
 import { parseArgs } from 'node:util';
 
 export const getCommandLineArgs = () => {
@@ -47,22 +46,4 @@ export const writeOutputToFile = async (output: string) => {
 	}
 
 	await Bun.write(path, output);
-};
-
-export const removeFile = async () => {
-	const path = Bun.env.OUTPUT_FILE_PATH;
-
-	if (!path) {
-		throw new Error('File path is required');
-	}
-
-	const file = Bun.file(path);
-
-	const fileExists = await file.exists();
-
-	if (!fileExists) {
-		return;
-	}
-
-	await unlink(path);
 };

@@ -3,14 +3,13 @@ import { createPlateau } from './plateau';
 import { moveRover, placeRover } from './rover';
 import type { Direction, Plateau } from './types';
 import { formatRoverPositions, getInstructionsFromFile } from './utils';
-import { removeFile, writeOutputToFile } from './utils/bun';
+import {  writeOutputToFile } from './utils/bun';
 
 export const exploreMars = async (filePath?: string, isDev?: boolean) => {
 	let plateau: Plateau;
 	const roverPositions: { x: number; y: number; direction: Direction }[] = [];
 
 	try {
-		await removeFile();
 		const { upperX, upperY, instructions } =
 			await getInstructionsFromFile(filePath);
 		plateau = createPlateau(upperX, upperY);
