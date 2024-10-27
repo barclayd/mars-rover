@@ -116,3 +116,21 @@ test('should print to the console using console.debug the final positions of the
   expect(debugSpy).toHaveBeenNthCalledWith(5, "(0,1) | (1,1) | (2,1) | (3,1) | (4,1) |   E  ");
   expect(debugSpy).toHaveBeenNthCalledWith(6, "(0,0) | (1,0) | (2,0) | (3,0) | (4,0) | (5,0)");
 });
+
+test('should error if no input file path is provided and no default input file path is set', async () => {
+  await expect(simulateMission()).rejects.toThrowError(
+    'Input file path is required',
+  );
+});
+
+test('should not write to the output file if an error occurs', async () => {
+  const inputFile = './test/data/invalid-upper-bounds.txt';
+
+  await expect(simulateMission(inputFile)).rejects.toThrow();
+
+  const outputFile = './test/data/output.txt';
+
+  await expect(readFile(outputFile)).rejects.toThrowError(
+    'Error reading file: No such file or directory',
+  );
+});

@@ -22,7 +22,7 @@ export const formatInput = (data: string) => {
 
 export const getInstructionsFromFile = async (filePath?: string) => {
   if (!filePath) {
-    throw new Error('File path is required');
+    throw new Error('Input file path is required');
   }
 
   const input = await readFile(filePath);

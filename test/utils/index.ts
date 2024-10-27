@@ -8,7 +8,7 @@ export const readFile = async (filePath: string) => {
     input = await file.text();
   } catch (error: unknown) {
     throw new Error(
-      `Error reading input file: ${error instanceof Error ? error.message : String(error)}`,
+      `Error reading file: ${error instanceof Error ? error.message : String(error)}`,
     );
   }
 
