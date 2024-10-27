@@ -5,7 +5,7 @@ export const prettyPrintPlateau = (plateau: Plateau) => {
 
   plateau.terrain.forEach((row, arrayY) => {
     const y = plateau.terrain.length - 1 - arrayY;
-    console.log(
+    console.debug(
       row
         .map((cell, x) =>
           cell === '' ? `(${x},${y})` : printActiveCell(cell, cellLength),

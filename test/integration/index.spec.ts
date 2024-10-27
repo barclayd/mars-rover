@@ -99,3 +99,20 @@ test('should call console.error if an error occurs while simulating the mission'
     'An error occurred while exploring Mars',
   );
 });
+
+test('should print to the console using console.debug the final positions of the rovers in dev mode', async () => {
+  const inputFile = './test/data/input.txt';
+
+  const debugSpy = mock(() => {});
+
+  console.debug = debugSpy;
+
+  await simulateMission(inputFile, true);
+
+  expect(debugSpy).toHaveBeenNthCalledWith(1, "(0,5) | (1,5) | (2,5) | (3,5) | (4,5) | (5,5)");
+  expect(debugSpy).toHaveBeenNthCalledWith(2, "(0,4) | (1,4) | (2,4) | (3,4) | (4,4) | (5,4)");
+  expect(debugSpy).toHaveBeenNthCalledWith(3, "(0,3) |   N   | (2,3) | (3,3) | (4,3) | (5,3)");
+  expect(debugSpy).toHaveBeenNthCalledWith(4, "(0,2) | (1,2) | (2,2) | (3,2) | (4,2) | (5,2)");
+  expect(debugSpy).toHaveBeenNthCalledWith(5, "(0,1) | (1,1) | (2,1) | (3,1) | (4,1) |   E  ");
+  expect(debugSpy).toHaveBeenNthCalledWith(6, "(0,0) | (1,0) | (2,0) | (3,0) | (4,0) | (5,0)");
+});
