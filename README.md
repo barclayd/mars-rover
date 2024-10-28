@@ -2,7 +2,7 @@
 
 This project simulates the control of Mars Rovers based on NASA specifications. It allows you to navigate rovers on a plateau on Mars, providing a simple interface to move and rotate the rovers.
 
-[![CI/CD](https://github.com/barclayd/mars-rover/actions/workflows/ci.yml/badge.svg)](https://github.com/barclayd/mars-rover/actions/workflows/ci.yml)
+[![CI](https://github.com/barclayd/mars-rover/actions/workflows/ci.yaml/badge.svg)](https://github.com/barclayd/mars-rover/actions/workflows/ci.yaml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Bun](https://img.shields.io/badge/Bun-%23000000.svg?style=flat&logo=bun&logoColor=white)](https://bun.sh)
 
