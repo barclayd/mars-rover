@@ -1,11 +1,11 @@
 steps:
   # Build the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/mars-rover:$COMMIT_SHA', '.']
+    args: ['build', '-t', 'gcr.io/mars-rover-439913/mars-rover:$COMMIT_SHA', '.']
   
   # Push the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/mars-rover:$COMMIT_SHA']
+    args: ['push', 'gcr.io/mars-rover-439913/mars-rover:$COMMIT_SHA']
   
   # Deploy to Cloud Run
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -14,11 +14,11 @@ steps:
       - 'deploy'
       - 'mars-rover'
       - '--image'
-      - 'gcr.io/$PROJECT_ID/mars-rover:$COMMIT_SHA'
+      - 'gcr.io/mars-rover-439913/mars-rover:$COMMIT_SHA'
       - '--region'
       - 'europe-west2'
       - '--platform'
       - 'managed'
 
 images:
-  - 'gcr.io/$PROJECT_ID/mars-rover:$COMMIT_SHA'
+  - 'gcr.io/mars-rover-439913/mars-rover:$COMMIT_SHA'
