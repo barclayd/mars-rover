@@ -72,3 +72,10 @@ export const formatRoverPositions = (
     .map((rover) => `${rover.x} ${rover.y} ${rover.direction}`)
     .join('\n\n');
 };
+
+export const measurePerformance = (fn: () => void, label = 'Operation') => {
+  console.time(label);
+  const result = fn();
+  console.timeEnd(label);
+  return result;
+};

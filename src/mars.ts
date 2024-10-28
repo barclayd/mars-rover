@@ -11,6 +11,7 @@ export const simulateMission = async (filePath?: string, isDev?: boolean) => {
   try {
     const { upperX, upperY, instructions } =
       await getInstructionsFromFile(filePath);
+
     plateau = createPlateau(upperX, upperY);
 
     instructions.forEach(([initialCoordinatesWithDirection, instructions]) => {
