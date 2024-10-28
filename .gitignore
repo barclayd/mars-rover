@@ -30,3 +30,11 @@ output.txt
 .DS_Store
 .AppleDouble
 .LSOverride
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+.terraformrc
+terraform.rc
+crash.log
