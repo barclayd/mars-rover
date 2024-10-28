@@ -1,6 +1,6 @@
 import { simulateMission } from './mars';
-import { getCommandLineArgs } from './utils/bun';
 import { measurePerformance } from './utils';
+import { getCommandLineArgs } from './utils/bun';
 
 const { filePath, isDev } = getCommandLineArgs();
 

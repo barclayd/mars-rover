@@ -73,7 +73,7 @@ export const formatRoverPositions = (
     .join('\n\n');
 };
 
-export const measurePerformance = (fn: Function, label: string = 'Operation') => {
+export const measurePerformance = (fn: () => void, label = 'Operation') => {
   console.time(label);
   const result = fn();
   console.timeEnd(label);
