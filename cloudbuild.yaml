@@ -3,16 +3,16 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'build',
-      '-t', 'europe-west2-docker.pkg.dev/$PROJECT_ID/mars-rover/mars-rover:$COMMIT_SHA',
-      '-t', 'europe-west2-docker.pkg.dev/$PROJECT_ID/mars-rover/mars-rover:latest',
+      '-t', 'europe-west1-docker.pkg.dev/$PROJECT_ID/mars-rover/mars-rover:$COMMIT_SHA',
+      '-t', 'europe-west1-docker.pkg.dev/$PROJECT_ID/mars-rover/mars-rover:latest',
       '.'
     ]
 
   # Push the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'europe-west2-docker.pkg.dev/$PROJECT_ID/mars-rover/mars-rover:$COMMIT_SHA']
+    args: ['push', 'europe-west1-docker.pkg.dev/$PROJECT_ID/mars-rover/mars-rover:$COMMIT_SHA']
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'europe-west2-docker.pkg.dev/$PROJECT_ID/mars-rover/mars-rover:latest']
+    args: ['push', 'europe-west1-docker.pkg.dev/$PROJECT_ID/mars-rover/mars-rover:latest']
 
   # Deploy to Cloud Run
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -21,15 +21,15 @@ steps:
       - 'deploy'
       - 'mars-rover'
       - '--image'
-      - 'europe-west2-docker.pkg.dev/$PROJECT_ID/mars-rover/mars-rover:$COMMIT_SHA'
+      - 'europe-west1-docker.pkg.dev/$PROJECT_ID/mars-rover/mars-rover:$COMMIT_SHA'
       - '--region'
-      - 'europe-west2'
+      - 'europe-west1'
       - '--platform'
       - 'managed'
 
 images:
-  - 'europe-west2-docker.pkg.dev/$PROJECT_ID/mars-rover/mars-rover:$COMMIT_SHA'
-  - 'europe-west2-docker.pkg.dev/$PROJECT_ID/mars-rover/mars-rover:latest'
+  - 'europe-west1-docker.pkg.dev/$PROJECT_ID/mars-rover/mars-rover:$COMMIT_SHA'
+  - 'europe-west1-docker.pkg.dev/$PROJECT_ID/mars-rover/mars-rover:latest'
 
 options:
   logging: CLOUD_LOGGING_ONLY
