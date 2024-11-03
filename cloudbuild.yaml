@@ -30,3 +30,6 @@ steps:
 images:
   - 'europe-west2-docker.pkg.dev/$PROJECT_ID/mars-rover/mars-rover:$COMMIT_SHA'
   - 'europe-west2-docker.pkg.dev/$PROJECT_ID/mars-rover/mars-rover:latest'
+
+options:
+  logging: REGIONAL_USER_OWNED_BUCKET
