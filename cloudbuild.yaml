@@ -1,12 +1,19 @@
 steps:
   # Build the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/mars-rover-439913/mars-rover:$COMMIT_SHA', '.']
-  
+    args: [
+      'build',
+      '-t', 'europe-west2-docker.pkg.dev/$PROJECT_ID/mars-rover/mars-rover:$COMMIT_SHA',
+      '-t', 'europe-west2-docker.pkg.dev/$PROJECT_ID/mars-rover/mars-rover:latest',
+      '.'
+    ]
+
   # Push the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/mars-rover-439913/mars-rover:$COMMIT_SHA']
-  
+    args: ['push', 'europe-west2-docker.pkg.dev/$PROJECT_ID/mars-rover/mars-rover:$COMMIT_SHA']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'europe-west2-docker.pkg.dev/$PROJECT_ID/mars-rover/mars-rover:latest']
+
   # Deploy to Cloud Run
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
@@ -14,11 +21,12 @@ steps:
       - 'deploy'
       - 'mars-rover'
       - '--image'
-      - 'gcr.io/mars-rover-439913/mars-rover:$COMMIT_SHA'
+      - 'europe-west2-docker.pkg.dev/$PROJECT_ID/mars-rover/mars-rover:$COMMIT_SHA'
       - '--region'
       - 'europe-west2'
       - '--platform'
       - 'managed'
 
 images:
-  - 'gcr.io/mars-rover-439913/mars-rover:$COMMIT_SHA'
+  - 'europe-west2-docker.pkg.dev/$PROJECT_ID/mars-rover/mars-rover:$COMMIT_SHA'
+  - 'europe-west2-docker.pkg.dev/$PROJECT_ID/mars-rover/mars-rover:latest'

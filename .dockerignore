@@ -1,0 +1,2 @@
+# Default platform for all builds
+DOCKER_DEFAULT_PLATFORM=linux/amd64 

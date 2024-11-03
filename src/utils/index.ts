@@ -73,9 +73,9 @@ export const formatRoverPositions = (
     .join('\n\n');
 };
 
-export const measurePerformance = (fn: () => void, label = 'Operation') => {
+export const measurePerformance = async (fn: () => Promise<void>, label = 'Operation') => {
   console.time(label);
-  const result = fn();
+  const result = await fn();
   console.timeEnd(label);
   return result;
 };
