@@ -56,9 +56,9 @@ To run the Mars Rover simulation in production mode:
 bun start
 ```
 
-This will output the final positions of the rovers to the file specified in the `OUTPUT_FILE_PATH` environment variable, upon success.
+This will output the final positions of the rovers to the file specified in the `DEFAULT_OUTPUT_FILE_PATH` environment variable, upon success.
 
-The `OUTPUT_FILE_PATH` is deleted if it exists before the application starts to ensure an accurate output for every run.
+The `DEFAULT_OUTPUT_FILE_PATH` is deleted if it exists before the application starts to ensure an accurate output for every run.
 
 ### Development Mode
 

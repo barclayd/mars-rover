@@ -39,7 +39,7 @@ export const readFile = async (filePath: string) => {
 };
 
 export const writeOutputToFile = async (output: string) => {
-  const path = Bun.env.OUTPUT_FILE_PATH;
+  const path = Bun.env.DEFAULT_OUTPUT_FILE_PATH;
 
   if (!path) {
     throw new Error('Output file path is required');
