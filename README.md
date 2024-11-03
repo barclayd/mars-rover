@@ -167,7 +167,21 @@ The CI/CD workflow consists of the following stages:
    - Builds and pushes container to Artifact Registry
    - Deploys to Cloud Run
 
-The workflow is defined in `.github/workflows/mainyml`.
+The workflow is defined in `.github/workflows/ci.yaml`.
+
+### Automated Deployment Process
+
+The project includes an automated deployment process configured in `deploy/main.tf`. A Cloud Build trigger is set up to automatically run whenever code is pushed to the main branch. Specifically:
+
+1. The GitHub trigger monitors the main branch for any pushes
+2. When code is pushed, it automatically triggers Cloud Build using the `cloudbuild.yaml` configuration
+3. Cloud Build executes the following steps:
+   - Builds a new Docker container from the latest code
+   - Pushes the container to Artifact Registry
+   - Updates the Cloud Run service with the new container
+4. The Cloud Run service is then automatically updated to run the latest version of the code
+
+This creates a seamless deployment pipeline where code changes pushed to main are automatically built, tested, and deployed without manual intervention. The Cloud Run service URL remains constant while the underlying container is updated.
 
 ### Infrastructure as Code
 
@@ -221,6 +235,21 @@ The deployment process is automated through GitHub Actions, but can also be perf
      --platform managed \
      --region [REGION]
    ```
+
+### Live Demo
+
+The application is currently deployed and accessible at [https://mars-rover-282376634786.europe-west1.run.app/](https://mars-rover-282376634786.europe-west1.run.app/).
+
+### Future Enhancements
+
+The following improvements are planned for future releases:
+
+- Integration with Google Cloud Storage (GCS) to persist rover movement outputs and enable historical tracking
+- Enhanced file input capabilities allowing users to:
+  - Upload custom input files through a web interface
+  - Select from a library of predefined rover movement patterns
+  - Save and share rover movement configurations
+
 
 ### Environment Configuration
 
