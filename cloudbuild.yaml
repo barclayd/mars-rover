@@ -32,4 +32,4 @@ images:
   - 'europe-west2-docker.pkg.dev/$PROJECT_ID/mars-rover/mars-rover:latest'
 
 options:
-  logging: REGIONAL_USER_OWNED_BUCKET
+  logging: CLOUD_LOGGING_ONLY
