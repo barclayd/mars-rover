@@ -30,7 +30,7 @@ resource "google_artifact_registry_repository" "docker_repo" {
 }
 
 # Cloud Build Trigger
-resource "google_cloudbuild_trigger" "filename-trigger" {
+resource "google_cloudbuild_trigger" "github-trigger" {
   name        = "Github"
   location    = var.region
 
