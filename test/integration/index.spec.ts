@@ -1,6 +1,10 @@
-import { beforeEach, expect, mock, test } from 'bun:test';
+import { beforeAll, beforeEach, expect, mock, test } from 'bun:test';
 import { simulateMission } from '../../src/mars';
 import { readFile, removePreviousOutputFile } from '../utils';
+
+beforeAll(() => {
+  process.env.DEFAULT_OUTPUT_FILE_PATH = './test/data/output.txt';
+});
 
 beforeEach(async () => {
   console.error = mock(() => {});

@@ -16,7 +16,7 @@ export const readFile = async (filePath: string) => {
 };
 
 export const removePreviousOutputFile = async () => {
-  const path = Bun.env.OUTPUT_FILE_PATH;
+  const path = Bun.env.DEFAULT_OUTPUT_FILE_PATH;
 
   if (!path) {
     throw new Error('File path is required');
