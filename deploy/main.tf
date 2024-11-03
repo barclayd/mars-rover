@@ -22,8 +22,8 @@ resource "google_project_service" "artifact_registry_api" {
 # Artifact Registry
 resource "google_artifact_registry_repository" "docker_repo" {
   provider      = google
-  location      = "europe-west2"
-  repository_id = "mars-rover"
+  location      = var.region
+  repository_id = var.docker_repository_id
   format        = "DOCKER"
   description   = "Docker repository for Mars Rover"
   depends_on    = [google_project_service.artifact_registry_api]
@@ -32,11 +32,11 @@ resource "google_artifact_registry_repository" "docker_repo" {
 # Cloud Build Trigger
 resource "google_cloudbuild_trigger" "filename-trigger" {
   name        = "Github"
-  location    = "europe-west2"
+  location    = var.region
 
   github {
-    owner = "barclayd"
-    name  = "mars-rover"
+    owner = var.github_owner
+    name  = var.github_repository
     push {
       branch = "^main$"
     }
@@ -51,15 +51,15 @@ resource "google_cloudbuild_trigger" "filename-trigger" {
 
 # Cloud Run Service
 resource "google_cloud_run_service" "cloud_run_service" {
-  name     = "mars-rover"
-  location = "europe-west2"
+  name     = var.github_repository
+  location = var.region
 
   template {
     spec {
       containers {
-        image = "europe-west2-docker.pkg.dev/mars-rover-439913/mars-rover/mars-rover:latest"
+        image = "${var.region}-docker.pkg.dev/${var.project_id}/${var.docker_repository_id}/${var.github_repository}:latest"
         ports {
-          container_port = 3000
+          container_port = var.port
         }
       }
     }
